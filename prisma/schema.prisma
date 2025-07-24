@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @db.Uuid
+  nik        String   @unique
+  name       String
+  phone      String
+  email      String   @unique
+  password   String
+  role       String
+  status     String?
+  deleted    Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime?
+  deleted_at DateTime?
+
+  village    Village?
+}
+
+model Village {
+  id          String    @id @db.Uuid
+  name        String
+  detail_loc  String
+  coords      Unsupported("geometry(POLYGON,4326)")
+  total_area  Float?
+  offer       Boolean?
+  in_contract Boolean?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+
+  user            User      @relation(fields: [id], references: [id])
+  recommendation  Recommendation?
+  location        Location?
+}
+
+model Location {
+  id            String    @id @db.Uuid
+  coords        Unsupported("geometry(POINT,4326)")
+  area          Float?
+  plant_type    String?
+  humidity      Float?
+  soil_ph       Float?
+  temperature   Float?
+  business_unit String?
+
+  village       Village   @relation(fields: [id], references: [id])
+  image         LocationImage?
+}
+
+model LocationImage {
+  id   String @id @db.Uuid
+  url  String
+
+  location Location @relation(fields: [id], references: [id])
+}
+
+model Recommendation {
+  id          String   @id @db.Uuid
+  competency  String
+  description String
+  deleted     Boolean  @default(false)
+  deleted_at  DateTime?
+
+  village     Village  @relation(fields: [id], references: [id])
+}
