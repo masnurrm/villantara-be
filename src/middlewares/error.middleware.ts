@@ -17,6 +17,7 @@ const handleApplicationErrors = (
 
   console.log(err);
   return res.status(500).send({
+    status: String(res.statusCode),
     message: 'Internal Server Error'
   });
 };
