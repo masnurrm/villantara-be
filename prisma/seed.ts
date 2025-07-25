@@ -1,0 +1,55 @@
+import { PrismaClient } from '@prisma/client';
+import { v4 as uuidv4 } from 'uuid';
+
+const prisma = new PrismaClient();
+
+async function main() {
+  const insertQuery = `
+    INSERT INTO "Village" ("id", "name", "district", "city", "province", "latitude", "longitude")
+    VALUES
+      ${generateValues().join(',\n')}
+    ON CONFLICT DO NOTHING;
+  `;
+
+  await prisma.$executeRawUnsafe(insertQuery);
+  console.log('Seeded Village data');
+}
+
+function generateValues(): string[] {
+  const villages = [
+    ['MARGAWATI', 'GARUT KOTA', 'KABUPATEN GARUT', 'JAWA BARAT', 7.2358323295382, 107.91250179852],
+    ['SUKANEGLA', 'GARUT KOTA', 'KABUPATEN GARUT', 'JAWA BARAT', 7.2488885774227, 107.92333295498],
+    ['CIMUNCANG', 'GARUT KOTA', 'KABUPATEN GARUT', 'JAWA BARAT', 7.2352794010076, 107.92027847076],
+    ['KOTAWETAN', 'GARUT KOTA', 'KABUPATEN GARUT', 'JAWA BARAT', 7.2130998323677, 107.91138702326],
+    ['KOTAKULON', 'GARUT KOTA', 'KABUPATEN GARUT', 'JAWA BARAT', 7.2252776373447, 107.90666483524],
+    ['KUTANEGARA', 'MALANGBONG', 'KABUPATEN GARUT', 'JAWA BARAT', 7.0780559569641, 108.05305712283],
+    ['SANDING', 'MALANGBONG', 'KABUPATEN GARUT', 'JAWA BARAT', 7.0825016807144, 108.06610891161],
+    ['KARANGMULYA', 'MALANGBONG', 'KABUPATEN GARUT', 'JAWA BARAT', 7.0955534694979, 108.0775019148],
+    ['CINAGARA', 'MALANGBONG', 'KABUPATEN GARUT', 'JAWA BARAT', 7.0963873213949, 108.10027900299],
+    ['CIKARAG', 'MALANGBONG', 'KABUPATEN GARUT', 'JAWA BARAT', 7.0908312814823, 108.10027900299],
+    ['WANAHERANG', 'GUNUNG PUTRI', 'KABUPATEN BOGOR', 'JAWA BARAT', 7.2358323295382, 107.91250179852],
+    ['BOJONG KULUR', 'GUNUNG PUTRI', 'KABUPATEN BOGOR', 'JAWA BARAT', 7.2488885774227, 107.92333295498],
+    ['CIANGSANA', 'GUNUNG PUTRI', 'KABUPATEN BOGOR', 'JAWA BARAT', 7.2352794010076, 107.92027847076],
+    ['GUNUNG PUTRI', 'GUNUNG PUTRI', 'KABUPATEN BOGOR', 'JAWA BARAT', 7.2130998323677, 107.91138702326],
+    ['BOJONG NANGKA', 'GUNUNG PUTRI', 'KABUPATEN BOGOR', 'JAWA BARAT', 7.2252776373447, 107.90666483524],
+    ['PUSPASARI', 'CITEUREUP', 'KABUPATEN BOGOR', 'JAWA BARAT', 7.0780559569641, 108.05305712283],
+    ['CITEUREUP', 'CITEUREUP', 'KABUPATEN BOGOR', 'JAWA BARAT', 7.0825016807144, 108.06610891161],
+    ['LEUWINUTUG', 'CITEUREUP', 'KABUPATEN BOGOR', 'JAWA BARAT', 7.0955534694979, 108.0775019148],
+    ['TAJUR', 'CITEUREUP', 'KABUPATEN BOGOR', 'JAWA BARAT', 7.0963873213949, 108.10027900299],
+    ['SANJA', 'CITEUREUP', 'KABUPATEN BOGOR', 'JAWA BARAT', 7.0908312814823, 108.10027900299]
+  ];
+
+  return villages.map(([name, district, city, province, lat, lon]) => {
+    const id = uuidv4();
+    return `('${id}', '${name}', '${district}', '${city}', '${province}', ${lat}, ${lon})`;
+  });
+}
+
+main()
+  .catch((e) => {
+    console.error('Seeding failed:', e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

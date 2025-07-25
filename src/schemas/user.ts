@@ -1,5 +1,4 @@
 import { z } from 'zod';
-// import require from 'require';
 
 const userSchema = z.object({
   id: z.string().uuid(),
@@ -10,13 +9,16 @@ const userSchema = z.object({
   password: z.string().min(6).max(100),
   role: z.string().min(1).max(20),
   status: z.string().optional(),
+  village_id: z.string().uuid().optional(),
   deleted: z.boolean().default(false),
   created_at: z.date().optional(),
   updated_at: z.date().optional(),
   deleted_at: z.date().optional()
-  // village: z.lazy(() => require('./village').default.village).optional()
 });
 
-export { userSchema };
+const usersSchema = z.array(userSchema);
+
+export { userSchema, usersSchema };
 
 export type User = z.infer<typeof userSchema>;
+export type Users = z.infer<typeof usersSchema>;

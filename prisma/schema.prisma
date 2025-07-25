@@ -16,57 +16,69 @@ model User {
   password   String
   role       String
   status     String?
+  village_id String?  @db.Uuid
   deleted    Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime?
   deleted_at DateTime?
 
-  village    Village?
+  village    Village? @relation(fields: [village_id], references: [id])
 }
 
 model Village {
   id          String    @id @db.Uuid
   name        String
-  detail_loc  String
-  coords      Unsupported("geometry(POLYGON,4326)")
+  district    String
+  city        String
+  province    String
+  latitude    Float
+  longitude   Float
   total_area  Float?
-  offer       Boolean?
-  in_contract Boolean?
+  offer       Boolean @default(false)
+  in_contract Boolean @default(false)
   created_at  DateTime  @default(now())
   updated_at  DateTime?
 
-  user            User      @relation(fields: [id], references: [id])
-  recommendation  Recommendation?
-  location        Location?
+  users           User[]
+  recommendations Recommendation[]
+  locations       Location[]
 }
 
 model Location {
   id            String    @id @db.Uuid
-  coords        Unsupported("geometry(POINT,4326)")
+  village_id    String    @db.Uuid  // Foreign key to Village
+  coords        Json?
   area          Float?
   plant_type    String?
   humidity      Float?
   soil_ph       Float?
   temperature   Float?
   business_unit String?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime?
 
-  village       Village   @relation(fields: [id], references: [id])
-  image         LocationImage?
+  village Village         @relation(fields: [village_id], references: [id])
+  images  LocationImage[] // One location can have many images
 }
 
 model LocationImage {
-  id   String @id @db.Uuid
-  url  String
+  id          String @id @db.Uuid
+  location_id String @db.Uuid  // Foreign key to Location
+  url         String
+  created_at  DateTime @default(now())
 
-  location Location @relation(fields: [id], references: [id])
+  location Location @relation(fields: [location_id], references: [id])
 }
 
 model Recommendation {
   id          String   @id @db.Uuid
+  village_id  String   @db.Uuid  // Foreign key to Village
   competency  String
   description String
   deleted     Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime?
   deleted_at  DateTime?
 
-  village     Village  @relation(fields: [id], references: [id])
+  village Village @relation(fields: [village_id], references: [id])
 }
