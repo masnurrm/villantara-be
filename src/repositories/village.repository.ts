@@ -7,7 +7,8 @@ const villageRepository = {
       include: {
         users: true,
         recommendations: true,
-        locations: true
+        locations: true,
+        transactions: true
       }
     });
   },
@@ -21,7 +22,8 @@ const villageRepository = {
       include: {
         users: true,
         recommendations: true,
-        locations: true
+        locations: true,
+        transactions: true
       },
       where: { id }
     });

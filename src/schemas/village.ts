@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import { locationImagesSchema } from './location';
 import { recommendationsSchema } from './recommendation';
+import { transactionsSchema } from './transaction';
 import { usersSchema } from './user';
 
 const villageSchema = z.object({
@@ -19,7 +20,8 @@ const villageSchema = z.object({
   updated_at: z.date().optional(),
   users: usersSchema.optional(),
   recommendations: recommendationsSchema.optional(),
-  locations: locationImagesSchema.optional()
+  locations: locationImagesSchema.optional(),
+  transactions: transactionsSchema.optional()
 });
 
 export { villageSchema };

@@ -34,14 +34,13 @@ model Village {
   latitude    Float
   longitude   Float
   total_area  Float?
-  offer       Boolean @default(false)
-  in_contract Boolean @default(false)
   created_at  DateTime  @default(now())
   updated_at  DateTime?
 
   users           User[]
   recommendations Recommendation[]
   locations       Location[]
+  transactions    Transaction[]
 }
 
 model Location {
@@ -71,14 +70,27 @@ model LocationImage {
 }
 
 model Recommendation {
-  id          String   @id @db.Uuid
-  village_id  String   @db.Uuid  // Foreign key to Village
-  competency  String
+  id              String   @id @db.Uuid
+  village_id      String   @db.Uuid  // Foreign key to Village
+  total_capacity  Float
+  insight         String?
+  deleted         Boolean  @default(false)
+  created_at      DateTime @default(now())
+  updated_at      DateTime?
+  deleted_at      DateTime?
+
+  village Village @relation(fields: [village_id], references: [id])
+}
+
+model Transaction {
+  id          String  @id @db.Uuid
+  village_id  String  @db.Uuid
+  name        String
+  capacity    Float
+  min_price   Int
+  max_price   Int
   description String
-  deleted     Boolean  @default(false)
-  created_at  DateTime @default(now())
-  updated_at  DateTime?
-  deleted_at  DateTime?
+  status      String
 
   village Village @relation(fields: [village_id], references: [id])
 }
