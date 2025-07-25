@@ -4,7 +4,7 @@ const userSchema = z.object({
   id: z.string().uuid(),
   nik: z.string().min(1).max(16),
   name: z.string().min(1).max(100),
-  phone: z.string().min(1).max(20),
+  phone: z.string().min(1).max(20).optional(),
   email: z.string().email(),
   password: z.string().min(6).max(100),
   role: z.string().min(1).max(20),

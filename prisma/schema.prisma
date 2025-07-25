@@ -9,9 +9,9 @@ datasource db {
 
 model User {
   id         String   @id @db.Uuid
-  nik        String   @unique
+  nik        String?   @unique
   name       String
-  phone      String
+  phone      String?
   email      String   @unique
   password   String
   role       String
@@ -87,10 +87,12 @@ model Transaction {
   village_id  String  @db.Uuid
   name        String
   capacity    Float
-  min_price   Int
-  max_price   Int
+  min_price   Int?
+  max_price   Int?
   description String
   status      String
+  type        String
+  duration    Int?
 
   village Village @relation(fields: [village_id], references: [id])
 }

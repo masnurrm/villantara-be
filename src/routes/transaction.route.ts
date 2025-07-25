@@ -6,7 +6,8 @@ const transactionRouter = Router();
 
 transactionRouter.get('/', transactionController.getAllTransactions);
 transactionRouter.post('/', transactionController.createTransaction);
-transactionRouter.get('/filter/:status', transactionController.findTransactionByStatus);
+transactionRouter.get('/status/:status', transactionController.findTransactionByStatus);
+transactionRouter.get('/village/:villageId', transactionController.findTransactionByVillageId);
 transactionRouter.get('/:id', transactionController.findTransactionById);
 transactionRouter.put('/:id', transactionController.updateTransaction);
 transactionRouter.delete('/:id', transactionController.deleteTransaction);

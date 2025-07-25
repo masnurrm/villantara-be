@@ -15,6 +15,11 @@ const transactionRepository = {
       where: { status }
     });
   },
+  findByVillageId: async (villageId: string) => {
+    return await prisma.transaction.findMany({
+      where: { village_id: villageId }
+    });
+  },
   findById: async (id: string) => {
     return await prisma.transaction.findUnique({
       where: { id }

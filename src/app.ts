@@ -16,11 +16,16 @@ loadEnv();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://7409484259fb.ngrok-free.app',
+    credentials: true
+  })
+);
 app.use(json());
 app.use(helmet());
 app.use(morgan('dev'));
-app.get('/health', (_req, res) => res.send('OK!'));
+app.get('/', (_req, res) => res.send('OK!'));
 app.use('/users', userRouter);
 app.use('/villages', villageRouter);
 app.use('/locations', locationRouter);

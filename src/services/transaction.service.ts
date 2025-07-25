@@ -17,6 +17,10 @@ const transactionService = {
     return await transactionRepository.findByStatus(status);
   },
 
+  findByVillageId: async (villageId: string) => {
+    return await transactionRepository.findByVillageId(villageId);
+  },
+
   findById: async (id: string) => {
     return await transactionRepository.findById(id);
   },

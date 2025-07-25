@@ -39,6 +39,18 @@ const transactionController = {
     }
   },
 
+  findTransactionByVillageId: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const transactions = await transactionService.findByVillageId(req.params.villageId);
+      res.status(200).json({
+        status: String(res.statusCode),
+        data: transactions
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   findTransactionById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const transaction = await transactionService.findById(req.params.id);
