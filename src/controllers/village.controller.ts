@@ -54,6 +54,17 @@ const villageController = {
     } catch (error) {
       next(error);
     }
+  },
+  getAnalysis: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const analysis = await villageService.getAnalysis(req.params.id);
+      res.status(200).json({
+        status: String(res.statusCode),
+        data: analysis
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 };
 

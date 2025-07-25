@@ -10,6 +10,7 @@ const userSchema = z.object({
   role: z.string().min(1).max(20),
   status: z.string().optional(),
   village_id: z.string().uuid().optional(),
+  access_token: z.string().optional(),
   deleted: z.boolean().default(false),
   created_at: z.date().optional(),
   updated_at: z.date().optional(),

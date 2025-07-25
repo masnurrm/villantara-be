@@ -16,6 +16,7 @@ model User {
   password   String
   role       String
   status     String?
+  access_token  String?
   village_id String?  @db.Uuid
   deleted    Boolean  @default(false)
   created_at DateTime @default(now())
@@ -72,7 +73,8 @@ model LocationImage {
 model Recommendation {
   id              String   @id @db.Uuid
   village_id      String   @db.Uuid  // Foreign key to Village
-  total_capacity  Float
+  carbon_captured Float?
+  carbon_value    Float?
   insight         String?
   deleted         Boolean  @default(false)
   created_at      DateTime @default(now())

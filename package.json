@@ -39,6 +39,7 @@
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
+    "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^4.13.0",
     "@types/sanitize-html": "^2.9.0",
     "bcrypt": "^5.1.0",

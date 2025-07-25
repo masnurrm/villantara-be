@@ -18,7 +18,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'http://7409484259fb.ngrok-free.app',
+    origin: '*',
     credentials: true
   })
 );

@@ -45,6 +45,11 @@ const locationRepository = {
     return await prisma.locationImage.delete({
       where: { id }
     });
+  },
+  getLocationsByVillageId: async (villageId: string) => {
+    return await prisma.location.findMany({
+      where: { village_id: villageId }
+    });
   }
 };
 

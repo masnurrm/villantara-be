@@ -25,9 +25,11 @@ export const userController = {
           message: 'User not found'
         });
       }
+      const token = await userService.generateToken(user);
       res.status(200).json({
         status: String(res.statusCode),
-        data: user
+        data: user,
+        token
       });
     } catch (error) {
       next(error);

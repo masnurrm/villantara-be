@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import userRepository from '../repositories/user.repository';
 import { User } from '../schemas/user';
+import { generateToken } from '../utils/functions';
 
 const userService = {
   register: async (data: User) => {
@@ -28,6 +29,13 @@ const userService = {
   },
   delete: async (id: string) => {
     return await userRepository.deleteUser(id);
+  },
+  generateToken: async (data: User) => {
+    const token = await generateToken(data);
+    // update user
+    data.access_token = token;
+    await userRepository.updateUser(data.id, data);
+    return token;
   }
 };
 
