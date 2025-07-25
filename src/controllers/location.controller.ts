@@ -73,7 +73,10 @@ const locationController = {
     try {
       const imageData = req.body;
       const image = await locationService.addImage(req.params.id, imageData);
-      res.status(201).json(image);
+      res.status(201).json({
+        status: String(res.statusCode),
+        data: image
+      });
     } catch (error) {
       next(error);
     }
@@ -82,7 +85,10 @@ const locationController = {
   deleteImage: async (req: Request, res: Response, next: NextFunction) => {
     try {
       await locationService.deleteImage(req.params.id);
-      res.status(204).send();
+      res.status(204).json({
+        status: String(res.statusCode),
+        message: 'Image deleted successfully'
+      });
     } catch (error) {
       next(error);
     }

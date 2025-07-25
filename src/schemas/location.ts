@@ -4,6 +4,7 @@ const coordinate = z.tuple([z.number(), z.number()]);
 
 const locationImageSchema = z.object({
   id: z.string().uuid(),
+  location_id: z.string().uuid(),
   url: z.string().url()
 });
 

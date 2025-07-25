@@ -27,6 +27,7 @@ const locationService = {
   },
 
   addImage: async (locationId: string, imageData: LocationImage) => {
+    imageData.id = uuidv4();
     return await locationRepository.addImage(locationId, imageData);
   },
 
